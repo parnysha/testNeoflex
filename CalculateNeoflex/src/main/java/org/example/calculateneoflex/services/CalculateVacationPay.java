@@ -5,5 +5,5 @@ import java.time.LocalDate;
 
 public interface CalculateVacationPay<T> {
     T calculate(BigInteger salary, byte days);
-    T calculate(BigInteger salary, LocalDate dateVacationStart, LocalDate dateVacationEnd);
+    T calculate(BigInteger salary,byte days, LocalDate dateVacationStart, LocalDate dateVacationEnd);
 }

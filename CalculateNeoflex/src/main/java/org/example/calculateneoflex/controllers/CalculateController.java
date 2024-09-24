@@ -17,12 +17,11 @@ import java.time.LocalDate;
 public class CalculateController {
     private final CalculateVacationPay<VacationPayDAO> calculateVacationPay;
 
-    @GetMapping("/salary/{salary}/vacation/{days}")
-    public VacationPayDAO calculateVacationPay(@PathVariable BigInteger salary, @PathVariable byte days) {
+    @GetMapping("/salary/{salary}/vacation")
+    public VacationPayDAO calculateVacationPay(@PathVariable BigInteger salary, byte days, @RequestParam(value = "start",required = false) @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate dateVacationStart, @RequestParam(value = "finish",required = false) @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate dateVacationEnd ) {
+        if(dateVacationStart != null && dateVacationEnd != null) {
+            return calculateVacationPay.calculate(salary,days,dateVacationStart,dateVacationEnd);
+        }
         return calculateVacationPay.calculate(salary,days);
-    }
-    @GetMapping("/salary/{salary}/first-date/{dateVacationStart}/second-date/{dateVacationEnd}")
-    public VacationPayDAO calculateVacationPay(@PathVariable BigInteger salary, @PathVariable @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate dateVacationStart,@PathVariable @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate dateVacationEnd) {
-        return calculateVacationPay.calculate(salary,dateVacationStart,dateVacationEnd);
     }
 }

@@ -38,37 +38,39 @@ public class CalculatevacationPayTest {
     @Test
     public void testCalculateBySalaryWithDatesInOneYears() {
         VacationPayDAO expectedResult = new VacationPayDAO(BigInteger.valueOf(100));
-        VacationPayDAO result = calculateVacationPay.calculate(BigInteger.valueOf(10),LocalDate.of(2001, 1, 1),LocalDate.of(2001, 1, 11));
+        VacationPayDAO result = calculateVacationPay.calculate(BigInteger.valueOf(10),(byte) 10,LocalDate.of(2001, 1, 1),LocalDate.of(2001, 1, 11));
         assertEquals(expectedResult, result);
     }
 
     @Test
     public void testCalculateByNotValidSalaryDatesInOneYears() {
-        assertThrows(IllegalArgumentException.class, () -> calculateVacationPay.calculate(BigInteger.valueOf(0),LocalDate.of(2001, 1, 1),LocalDate.of(2001, 1, 11)));
+        assertThrows(IllegalArgumentException.class, () -> calculateVacationPay.calculate(BigInteger.valueOf(0),(byte) 10,LocalDate.of(2001, 1, 1),LocalDate.of(2001, 1, 11)));
     }
 
     @Test
     public void testCalculateBySalaryAndNotValidDaysInOneYears() {
-        assertThrows(IllegalArgumentException.class, () -> calculateVacationPay.calculate(BigInteger.valueOf(0),LocalDate.of(2001, 1, 1),LocalDate.of(2001, 1, 1)));
-        assertThrows(IllegalArgumentException.class, () -> calculateVacationPay.calculate(BigInteger.valueOf(0),LocalDate.of(2001, 1, 1),LocalDate.of(2001, 1, 30)));
+        assertThrows(IllegalArgumentException.class, () -> calculateVacationPay.calculate(BigInteger.valueOf(10),(byte) 1,LocalDate.of(2001, 1, 1),LocalDate.of(2001, 1, 1)));
+        assertThrows(IllegalArgumentException.class, () -> calculateVacationPay.calculate(BigInteger.valueOf(10),(byte) 30,LocalDate.of(2001, 1, 1),LocalDate.of(2001, 1, 30)));
+        assertThrows(IllegalArgumentException.class, () -> calculateVacationPay.calculate(BigInteger.valueOf(10),(byte) 20,LocalDate.of(2001, 1, 1),LocalDate.of(2001, 1, 11)));
     }
 
     @Test
     public void testCalculateBySalaryWithDatesInDifferentYears() {
         VacationPayDAO expectedResult = new VacationPayDAO(BigInteger.valueOf(100));
-        VacationPayDAO result = calculateVacationPay.calculate(BigInteger.valueOf(10),LocalDate.of(2001, 12, 22),LocalDate.of(2001, 1, 1));
+        VacationPayDAO result = calculateVacationPay.calculate(BigInteger.valueOf(10),(byte) 10,LocalDate.of(2001, 12, 22),LocalDate.of(2002, 1, 1));
         assertEquals(expectedResult, result);
     }
 
     @Test
     public void testCalculateByNotValidSalaryDatesInDifferentYears() {
-        assertThrows(IllegalArgumentException.class, () -> calculateVacationPay.calculate(BigInteger.valueOf(0),LocalDate.of(2001, 12, 22),LocalDate.of(2001, 1, 1)));
+        assertThrows(IllegalArgumentException.class, () -> calculateVacationPay.calculate(BigInteger.valueOf(0),(byte) 10,LocalDate.of(2001, 12, 22),LocalDate.of(2002, 1, 1)));
     }
 
     @Test
     public void testCalculateBySalaryAndNotValidDaysInDifferentYears() {
-        assertThrows(IllegalArgumentException.class, () -> calculateVacationPay.calculate(BigInteger.valueOf(0),LocalDate.of(2001, 1, 1),LocalDate.of(2001, 1, 1)));
-        assertThrows(IllegalArgumentException.class, () -> calculateVacationPay.calculate(BigInteger.valueOf(0),LocalDate.of(2001, 1, 1),LocalDate.of(2001, 1, 30)));
+        assertThrows(IllegalArgumentException.class, () -> calculateVacationPay.calculate(BigInteger.valueOf(10),(byte) 1,LocalDate.of(2001, 1, 1),LocalDate.of(2001, 1, 1)));
+        assertThrows(IllegalArgumentException.class, () -> calculateVacationPay.calculate(BigInteger.valueOf(10),(byte) 36,LocalDate.of(2001, 12, 10),LocalDate.of(2002, 1, 15)));
+        assertThrows(IllegalArgumentException.class, () -> calculateVacationPay.calculate(BigInteger.valueOf(10),(byte) 20,LocalDate.of(2001, 12, 22),LocalDate.of(2002, 1, 1)));
     }
 
 }

@@ -24,9 +24,10 @@ public class CalculateVacationPayImpl implements CalculateVacationPay<VacationPa
     }
 
     @Override
-    public VacationPayDAO calculate(BigInteger salary, LocalDate dateVacationStart, LocalDate dateVacationEnd) throws IllegalArgumentException{
+    public VacationPayDAO calculate(BigInteger salary,byte days ,LocalDate dateVacationStart, LocalDate dateVacationEnd) throws IllegalArgumentException{
         long differenceDays = dateVacationEnd.getDayOfYear()-dateVacationStart.getDayOfYear();
         long durationVacation = differenceDays<0?365+differenceDays:differenceDays;
+        if (days!=durationVacation)throw new IllegalArgumentException("Количество дней взятых в отпуск не совпадает с датами");
         if (!checkValiditySalary.isValid(salary))throw new IllegalArgumentException("Средняя зарплата должна быть больше 0");
         if(!checkValidityDays.isValid(durationVacation)) throw new IllegalArgumentException("Количество отпускных дней должно быть не менее 1 и не более 28");
         return new VacationPayDAO(salary.multiply(BigInteger.valueOf(durationVacation)));
